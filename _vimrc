@@ -1,25 +1,9 @@
-" Custom setting
-syntax on
-set nu
-set ruler
-set mouse=a
-set hlsearch
-set cursorline
-set backspace=2
-set incsearch
-set grepprg=grep\ -nH\ $*
-set nocompatible
-set encoding=utf-8
-set foldmethod=manual "indent/marker/manual
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -51,6 +35,20 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+" Custom setting
+syntax on
+set nu
+set ruler
+set mouse=a
+set hlsearch
+set cursorline
+set backspace=2
+set incsearch
+set grepprg=grep\ -nH\ $*
+set nocompatible
+set encoding=utf-8
+set foldmethod=manual "indent/marker/manual
 
 " Tab setting
 set expandtab
