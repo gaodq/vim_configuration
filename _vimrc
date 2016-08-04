@@ -9,17 +9,22 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'The-NERD-tree'                   "目录树显示插件
-" scrooloose/nerdtree
 nmap <F5> :NERDTreeToggle<cr>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 Plugin 'The-NERD-Commenter'              "快速注释插件
+let g:NERDSpaceDelims = 1
+
 Plugin 'ctrlp.vim'                       "文件查找插件
 Plugin 'AutoClose'                       "自动添加匹配的右括号
 Plugin 'Valloric/YouCompleteMe'          "目前最好用的自动补全插件
 Plugin 'honza/vim-snippets'              "代码片段自动生成插件
 Plugin 'Lokaltog/vim-easymotion'         "快速跳转/查找字符插件
-Plugin 'nathanaelkane/vim-indent-guides' "快速跳转/查找字符插件
 Plugin 'junegunn/vim-easy-align'
+Plugin 'vim-airline/vim-airline'
+Plugin 'Yggdroot/indentLine'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -61,17 +66,18 @@ set cinoptions=(0
 autocmd FileType make,automake set noexpandtab shiftwidth=8 softtabstop=8
 
 " Removes trailing spaces and retab
+" Trailing whitespace and tabs are forbidden, so highlight them.
+highlight ForbiddenWhitespace ctermbg=red guibg=red
+match ForbiddenWhitespace /\s\+$\|\t/
+
+" Do not highlight spaces at the end of line while typing on that line.
+autocmd InsertEnter * match ForbiddenWhitespace /\t\|\s\+\%#\@<!$/
+
 function TrimWhiteSpace()
    %s/\s*$//
    ''
    retab
 :endfunction
-
-" set list listchars=trail:.,extends:>
-" autocmd FileWritePre * :call TrimWhiteSpace()
-" autocmd FileAppendPre * :call TrimWhiteSpace()
-" autocmd FilterWritePre * :call TrimWhiteSpace()
-" autocmd BufWritePre * :call TrimWhiteSpace()
 
 map <F2> :call TrimWhiteSpace()<CR>
 map! <F2> :call TrimWhiteSpace()<CR>
