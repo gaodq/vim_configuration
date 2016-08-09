@@ -47,7 +47,12 @@ set nu
 set ruler
 set mouse=a
 set hlsearch
+
 set cursorline
+set cursorcolumn
+hi CursorLine term=bold cterm=NONE ctermbg=darkgrey ctermfg=NONE guibg=Grey40
+hi CursorColumn term=bold cterm=NONE ctermbg=darkgrey ctermfg=NONE guibg=Grey40
+
 set backspace=2
 set incsearch
 set grepprg=grep\ -nH\ $*
@@ -62,6 +67,7 @@ set tabstop=4
 set softtabstop=4
 set cindent
 set cinoptions=(0
+
 " Allow tabs in Makefiles.
 autocmd FileType make,automake set noexpandtab shiftwidth=8 softtabstop=8
 
