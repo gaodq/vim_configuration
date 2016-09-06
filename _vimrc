@@ -25,6 +25,7 @@ Plugin 'Lokaltog/vim-easymotion'         "快速跳转/查找字符插件
 Plugin 'junegunn/vim-easy-align'
 Plugin 'vim-airline/vim-airline'
 Plugin 'Yggdroot/indentLine'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -87,3 +88,6 @@ function TrimWhiteSpace()
 
 map <F2> :call TrimWhiteSpace()<CR>
 map! <F2> :call TrimWhiteSpace()<CR>
+
+" remenber last position
+autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `\"" | endif
