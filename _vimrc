@@ -23,7 +23,15 @@ Plugin 'Valloric/YouCompleteMe'          "目前最好用的自动补全插件
 Plugin 'honza/vim-snippets'              "代码片段自动生成插件
 Plugin 'Lokaltog/vim-easymotion'         "快速跳转/查找字符插件
 Plugin 'junegunn/vim-easy-align'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+set laststatus=2
+
 Plugin 'Yggdroot/indentLine'
+map <F3> :IndentLinesToggle<CR>
+map! <F3> <ESC>:IndentLinesToggle<CR>
+
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
 
@@ -61,11 +69,35 @@ set nocompatible
 set encoding=utf-8
 set foldmethod=manual "indent/marker/manual
 
-" Tab setting
+" ============= Tab setting ==============================
+
+" default setting
 set expandtab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+let g:ts_val=4
+
+function ToggleTabstop()
+    if (g:ts_val==4)
+      set expandtab
+      set shiftwidth=2
+      set tabstop=2
+      set softtabstop=2
+      let g:ts_val=2
+      echo "tabstop = 2"
+    else
+      set expandtab
+      set shiftwidth=4
+      set tabstop=4
+      set softtabstop=4
+      let g:ts_val=4
+      echo "tabstop = 4"
+    endif
+:endfunction
+map <F4> :call ToggleTabstop()<CR>
+map! <F4> <ESC>:call ToggleTabstop()<CR>
+
 set cindent
 set cinoptions=(0
 
@@ -74,7 +106,7 @@ autocmd FileType make,automake set noexpandtab shiftwidth=8 softtabstop=8
 
 " Removes trailing spaces and retab
 " Trailing whitespace and tabs are forbidden, so highlight them.
-highlight ForbiddenWhitespace ctermbg=red guibg=red
+highlight ForbiddenWhitespace ctermbg=lightcyan guibg=Grey40
 match ForbiddenWhitespace /\s\+$\|\t/
 
 " Do not highlight spaces at the end of line while typing on that line.
@@ -87,7 +119,8 @@ function TrimWhiteSpace()
 :endfunction
 
 map <F2> :call TrimWhiteSpace()<CR>
-map! <F2> :call TrimWhiteSpace()<CR>
+map! <F2> <ESC>:call TrimWhiteSpace()<CR>
+" ============= Tab setting end ==========================
 
 " remenber last position
 autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `\"" | endif
@@ -96,7 +129,7 @@ autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `
 set foldmethod=indent
 set nofoldenable
 
-" =================== tagbar =====================
+" =================== tagbar setting =====================
 " 设置 tagbar 子窗口的位置出现在主编辑区的左边 
 let tagbar_left=1 
 " 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
@@ -139,9 +172,9 @@ let g:tagbar_type_cpp = {
          \ 'union'     : 'u'
      \ }
 \ }
-" =================== tagbar end =================
+" =================== tagbar setting end =================
 
-" =================== cscope =====================
+" =================== cscope setting =====================
 if has("cscope")
     set csprg=/usr/bin/cscope
     set csto=0
@@ -165,4 +198,4 @@ nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-" =================== cscope end =================
+" =================== cscope setting end =================
