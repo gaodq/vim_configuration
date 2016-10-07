@@ -30,6 +30,7 @@ Plugin 'vim-airline/vim-airline-themes'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
+let g:airline_symbols.maxlinenr = 'Ξ'
 let g:airline_symbols.space = "\ua0"
 let g:airline_exclude_filename = []
 let g:Powerline_symbols='fancy'
@@ -46,6 +47,7 @@ map! <F3> <ESC>:IndentLinesToggle<CR>
 
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -92,21 +94,25 @@ set softtabstop=4
 let g:ts_val=4
 
 function ToggleTabstop()
-    if (g:ts_val==4)
-      set expandtab
-      set shiftwidth=2
-      set tabstop=2
-      set softtabstop=2
-      let g:ts_val=2
-      echo "tabstop = 2"
-    else
-      set expandtab
-      set shiftwidth=4
-      set tabstop=4
-      set softtabstop=4
-      let g:ts_val=4
-      echo "tabstop = 4"
-    endif
+  if (g:ts_val==4)
+    set expandtab
+    set shiftwidth=2
+    set tabstop=2
+    set softtabstop=2
+    let g:ts_val=2
+    echo "tabstop = 2"
+    IndentLinesDisable
+    IndentLinesEnable
+  else
+    set expandtab
+    set shiftwidth=4
+    set tabstop=4
+    set softtabstop=4
+    let g:ts_val=4
+    echo "tabstop = 4"
+    IndentLinesDisable
+    IndentLinesEnable
+  endif
 :endfunction
 map <F4> :call ToggleTabstop()<CR>
 map! <F4> <ESC>:call ToggleTabstop()<CR>
@@ -202,13 +208,21 @@ if has("cscope")
     endif
     set csverb
 endif
-
+" s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
 nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+" g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
 nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+" d: 查找本函数调用的函数
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+" c: 查找调用本函数的函数
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+" t: 查找指定的字符串
+nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+" e: 查找egrep模式，相当于egrep功能，但查找速度快多了
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+" f: 查找并打开文件，类似vim的find功能
+nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+" i: 查找包含本文件的文件
+nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+
 " =================== cscope setting end =================
